@@ -1,5 +1,6 @@
 package com.florianoDev.PersonalLibrary.Models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -16,10 +17,10 @@ data class Book(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
 
-    @field:NotBlank
+    @field:NotBlank(message = "O título é obrigatório")
     val titulo: String,
 
-    @field:NotBlank
+    @field:NotBlank(message = "O autor é obrigatório")
     val autor: String,
 
     val dataPublicacao: LocalDate,
@@ -30,6 +31,6 @@ data class Book(
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     val usuario: User? = null
-
 )

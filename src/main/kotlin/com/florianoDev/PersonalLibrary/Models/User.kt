@@ -1,5 +1,6 @@
 package com.florianoDev.PersonalLibrary.Models
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -17,10 +18,11 @@ data class User(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
 
-    @field:NotBlank
+    @field:NotBlank(message = "O nome é obrigatório")
     val nome: String,
 
-    @field:Email
+    @field:Email(message = "E-mail inválido")
+    @field:NotBlank(message = "O e-mail é obrigatório")
     val email: String,
 
     val dataNascimento: LocalDate,
@@ -30,5 +32,6 @@ data class User(
     val horaRegistro: LocalDateTime,
 
     @OneToMany(mappedBy = "usuario", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonManagedReference
     val books: List<Book> = mutableListOf()
 )
